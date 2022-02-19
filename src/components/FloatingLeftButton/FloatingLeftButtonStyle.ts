@@ -5,12 +5,9 @@ export default StyleSheet.create({
     container: {
         backgroundColor: colors.primaryColor,
         borderRadius: 50,
-        justifyContent: "center",
-        alignContent: "center",
-        alignSelf: "flex-start",
-        marginBottom: 50,
-        marginTop: "auto",
-        margin: 20,
+        left: 20,
+        bottom: 20,
+        position: "absolute"
     },
     plusButton: {
         color: colors.whiteColor,
