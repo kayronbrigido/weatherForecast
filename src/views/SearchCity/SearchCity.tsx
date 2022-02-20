@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import styles from "./SearchCityStyle"
-import DropdownModal from '../../components/DropdownModal/';
-import variables from '../../config/variables';
+import DropdownModal from '@src/components/DropdownModal/';
+import LargeButton from '@src/components/LargeButton';
 
 const SearchCity: React.FC = () => {
 
@@ -35,21 +35,41 @@ const SearchCity: React.FC = () => {
         "texto26",
         "texto27",
         "texto28",
-        "texto29",        
+        "texto29",
     ]
     const [isVisibleUF, setIsVisibleUF] = useState(false)
+    const [isVisibleCity, setIsVisibleCity] = useState(false)
     const [selectedUF, setSelectedUF] = useState("")
-    return(
+    const [selectedCity, setSelectedCity] = useState("")
+    return (
         <View style={styles.container}>
-            <DropdownModal 
+            <DropdownModal
+                title='Estado'
                 data={data}
                 onSelect={(name) => setSelectedUF(name)}
                 setVisible={setIsVisibleUF}
-                visible={isVisibleUF} 
-                value={selectedUF} 
+                visible={isVisibleUF}
+                value={selectedUF}
                 placeholder={"Selecione o Estado"}
-                placeholderStyle={{fontSize: variables.fontSizeTitle, fontWeight: "bold"}}
+                placeholderStyle={styles.placeholder}
             />
+
+            <DropdownModal
+                title='Cidade'
+                data={data}
+                onSelect={(name) => setSelectedCity(name)}
+                setVisible={setIsVisibleCity}
+                visible={isVisibleCity}
+                value={selectedCity}
+                placeholder={"Selecione a Cidade"}
+                placeholderStyle={styles.placeholder}
+            />
+
+            <View style={styles.buttonPosition}>
+            <LargeButton 
+            title={"Adicionar Cidade"}
+            onPress={() => {}}/>
+            </View>
         </View>
     )
 }

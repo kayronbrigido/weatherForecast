@@ -6,10 +6,18 @@ import Home from "./views/Home";
 import SearchCity from './views/SearchCity';
 import * as colors from "./config/theme.json";
 
-const Stack = createStack();
+export type StackParamList = {
+    Home: undefined,
+    City: undefined,
+    SearchCity: undefined, 
+};
+
+const Stack = createStack<StackParamList>();
+
 
 const AppNavigator = () => (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='Home'>
+
         <Stack.Screen name="Home" component={Home} options={{
             headerStyle: {
                 backgroundColor: colors.primaryColor,

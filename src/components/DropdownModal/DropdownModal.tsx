@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Modal, TouchableOpacity, TouchableWithoutFeedback, View, Text, ViewStyle, TextStyle } from "react-native";
+import { FlatList, Modal, TouchableOpacity, TouchableWithoutFeedback, View, Text, ViewStyle, TextStyle, TextInput } from "react-native";
 import { removeAccent } from "../../services";
 import styles from "./DropdownModalStyle";
 
@@ -54,7 +54,7 @@ const DropdownModal = (props: IDropdownModal) => {
                     if (onPress) onPress();
                 }}>
                 <View style={[style, styles.input]}>
-                    {!!placeholder && !!value && !isTextArea && (<Text style={placeholderStyle}>{placeholder}</Text>)}
+                   <Text style={placeholderStyle}>{title}</Text>
                     <View style={styles.textContainer}>
                         <Text>
                             {value === "" ? placeholder : value}
@@ -72,8 +72,10 @@ const DropdownModal = (props: IDropdownModal) => {
                                     style={styles.list}
                                     ListHeaderComponent={
                                         <View>
-                                            {
-                                                //criar função de pesquisar no header
+                                            {hasSearch ?
+                                                <TextInput style={styles.searchField} onChangeText={(text) => setSearch(text)} />
+                                                :
+                                                <></>
                                             }
                                         </View>
                                     }

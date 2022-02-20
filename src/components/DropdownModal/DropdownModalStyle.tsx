@@ -14,7 +14,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         paddingVertical: 10,
-        paddingLeft: 5,
+        paddingLeft: 10,
     },
     overlay: {
         alignItems: "center",
@@ -61,5 +61,10 @@ export default StyleSheet.create({
         height: 1,
         backgroundColor: "#000",
         opacity: 0.1
+    },
+    searchField: {
+        marginTop: 10,
+        borderWidth: 1,
+        borderRadius: 10
     }
 })
