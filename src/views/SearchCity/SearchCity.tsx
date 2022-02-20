@@ -1,51 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { View } from 'react-native';
 import styles from "./SearchCityStyle"
 import DropdownModal from '@src/components/DropdownModal/';
 import LargeButton from '@src/components/LargeButton';
+import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { getCity, getState } from '@src/store/redux-store/actions/city';
+import useReduxState from '@src/hooks/useReduxState';
+import { IUF } from '@src/interfaces';
 
 const SearchCity: React.FC = () => {
 
-    const data = [
-        "texto01",
-        "texto02",
-        "texto03",
-        "texto04",
-        "texto05",
-        "texto06",
-        "texto07",
-        "texto08",
-        "texto09",
-        "texto10",
-        "texto11",
-        "texto12",
-        "texto13",
-        "texto14",
-        "texto15",
-        "texto16",
-        "texto17",
-        "texto18",
-        "texto19",
-        "texto20",
-        "texto21",
-        "texto22",
-        "texto23",
-        "texto24",
-        "texto25",
-        "texto26",
-        "texto27",
-        "texto28",
-        "texto29",
-    ]
-    const [isVisibleUF, setIsVisibleUF] = useState(false)
-    const [isVisibleCity, setIsVisibleCity] = useState(false)
-    const [selectedUF, setSelectedUF] = useState("")
-    const [selectedCity, setSelectedCity] = useState("")
+    const [ufData, setUfData] = useState<string[]>([]);
+    const [cityData, setCityData] = useState<string[]>([]);
+    const [isVisibleUF, setIsVisibleUF] = useState(false);
+    const [isVisibleCity, setIsVisibleCity] = useState(false);
+    const [selectedUF, setSelectedUF] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const dispatch = useDispatch();
+    const { city } = useReduxState()
+
+    useEffect(() => {
+        dispatch(getState())
+    }, [])
+
+    useEffect(() => {
+        dispatch(getCity(selectedUF))
+    }, [selectedUF])
+
+    useEffect(() => {
+        let UF: string[] = [];
+        city.UF?.map((state: IUF) => UF.push(state.sigla))
+        setUfData(UF)
+    }, [city.UF])
+
+    useEffect(() => {
+        let cities: string[] = [];
+        city.City?.map((city: IUF) =>  cities.push(city.nome))
+        setCityData(cities)
+    }, [city.City])
+
     return (
         <View style={styles.container}>
             <DropdownModal
                 title='Estado'
-                data={data}
+                data={ufData}
                 onSelect={(name) => setSelectedUF(name)}
                 setVisible={setIsVisibleUF}
                 visible={isVisibleUF}
@@ -56,7 +55,7 @@ const SearchCity: React.FC = () => {
 
             <DropdownModal
                 title='Cidade'
-                data={data}
+                data={cityData}
                 onSelect={(name) => setSelectedCity(name)}
                 setVisible={setIsVisibleCity}
                 visible={isVisibleCity}
@@ -66,12 +65,16 @@ const SearchCity: React.FC = () => {
             />
 
             <View style={styles.buttonPosition}>
-            <LargeButton 
-            title={"Adicionar Cidade"}
-            onPress={() => {}}/>
+                <LargeButton
+                    title={"Adicionar Cidade"}
+                    onPress={() => { }} />
             </View>
         </View>
     )
 }
 
 export default SearchCity;
+
+function useReducerState(): {} {
+    throw new Error('Function not implemented.');
+}
