@@ -5,10 +5,10 @@ import DropdownModal from '@src/components/DropdownModal/';
 import LargeButton from '@src/components/LargeButton';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { getCity, getState } from '@src/store/redux-store/actions/city';
+import { getCities, getCity, getState, setCity } from '@src/store/redux-store/actions/city';
 import useReduxState from '@src/hooks/useReduxState';
 import { IUF } from '@src/interfaces';
-
+import * as navigation from "@src/services/NavigationService";
 const SearchCity: React.FC = () => {
 
     const [ufData, setUfData] = useState<string[]>([]);
@@ -17,28 +17,57 @@ const SearchCity: React.FC = () => {
     const [isVisibleCity, setIsVisibleCity] = useState(false);
     const [selectedUF, setSelectedUF] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
+    const [acronymUF, setAcronymUF] = useState("");
     const dispatch = useDispatch();
     const { city } = useReduxState()
 
-    useEffect(() => {
-        dispatch(getState())
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            dispatch(getState())
+        }, [])
+    )
 
     useEffect(() => {
-        dispatch(getCity(selectedUF))
-    }, [selectedUF])
+        if (selectedUF) {
+            const { sigla } = city.UF?.find(e => e.nome === selectedUF);
+            setAcronymUF(sigla)
+            dispatch(getCity(sigla))
+        }
+    }, [dispatch, city.UF, selectedUF])
 
     useEffect(() => {
         let UF: string[] = [];
-        city.UF?.map((state: IUF) => UF.push(state.sigla))
+        city.UF?.map((state: IUF) => UF.push(state.nome))
         setUfData(UF)
-    }, [city.UF])
+        setSelectedCity("")
+    }, [city, dispatch])
 
     useEffect(() => {
         let cities: string[] = [];
-        city.City?.map((city: IUF) =>  cities.push(city.nome))
+        city.City?.map((city: IUF) => cities.push(city.nome))
         setCityData(cities)
-    }, [city.City])
+    }, [city, dispatch])
+
+    const handleSubmit = () => {
+
+        dispatch(getCities())
+
+        let arr = []
+
+        if (city.Cities?.length > 0 && city) {
+            city?.Cities?.map((i) => arr.push(i))
+        }
+
+        const obj = {
+            UF: selectedUF,
+            city: selectedCity,
+            acronymUF
+        }
+
+        arr.push(obj)
+        dispatch(setCity(arr))
+        navigation.navigate("Home")
+    }
 
     return (
         <View style={styles.container}>
@@ -67,7 +96,7 @@ const SearchCity: React.FC = () => {
             <View style={styles.buttonPosition}>
                 <LargeButton
                     title={"Adicionar Cidade"}
-                    onPress={() => { }} />
+                    onPress={() => { handleSubmit() }} />
             </View>
         </View>
     )
