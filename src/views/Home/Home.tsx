@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { getWeather, getWeatherArr } from '@src/store/redux-store/actions/weather';
 import useReduxState from '@src/hooks/useReduxState';
 import { getCities } from '@src/store/redux-store/actions/city';
+import { setHeaderTitle } from '@src/store/redux-store/actions/application';
 
 const Home: React.FC = () => {
 
@@ -40,6 +41,7 @@ const Home: React.FC = () => {
     }, [weatherArr])
 
     const handleSubmit = (city: string, UF: string) => {
+        dispatch(setHeaderTitle(city))
         dispatch(getWeather(city, UF))
        navigation.navigate("City")
     }

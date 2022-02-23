@@ -7,7 +7,7 @@ export default StyleSheet.create({
         flex: 1,
         marginHorizontal: 20,
         marginTop: 10,
-        marginBottom: 30,
+        marginBottom: 10,
         borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: {

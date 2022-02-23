@@ -12,7 +12,12 @@ export type WeatherState = {
     weatherArr: IWeather[] | null
 }
 
+export type AppState = {
+    headerTitle: string | null,
+}
+
 export type ReduxState = {
     city: CityState,
     weather: WeatherState
+    app: AppState
 }

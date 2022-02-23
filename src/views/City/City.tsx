@@ -1,8 +1,10 @@
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CityCard from '@src/components/CityCard';
 import useReduxState from '@src/hooks/useReduxState';
 import React from 'react'
 import { ScrollView, Text, View } from 'react-native';
+import styles from "./CityStyle"
+import * as NavigationService from '@services/NavigationService';
 
 const City: React.FC = () => {
 
@@ -10,8 +12,10 @@ const City: React.FC = () => {
     const days = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
     const months = ["Janeiro","Fevereiro","Março","Abril","Maior","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
+            <Text style={styles.text}>Previsão para os próximos 5 dias</Text>
             {weather?.daily?.map((day, index) => {
+                if(index > 4) return <></>
 
                 const dateArr = [
                     new Date().getDate() + index,
@@ -20,11 +24,10 @@ const City: React.FC = () => {
                 ]
 
                 let date = new Date(dateArr[2], dateArr[1], dateArr[0]).toLocaleDateString("pt-Br", { year:"numeric"})
-                console.log(date)
                 date = date.split("/")
-                console.log(date)
                 date = date[1] + " de " + months[parseInt(date[0]) - 1] + " de " + new Date().getFullYear()
                 let d: number | string = new Date().getDay() + index
+
                 if(d > 6) d = d - 7
                 d = days[d]
                 if(index === 0) d = "Hoje"

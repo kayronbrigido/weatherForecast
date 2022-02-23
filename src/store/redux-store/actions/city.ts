@@ -2,8 +2,6 @@ import CityApi from "@src/repositories/city"
 
 import { GET_CITIES, GET_CITY, GET_STATE, SET_CITY } from "./actionType";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useReduxState from "@src/hooks/useReduxState";
-
 
 export const getState = () => async (dispatch: any) => {
     try {
