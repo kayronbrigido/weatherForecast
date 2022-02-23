@@ -4,7 +4,8 @@ export type CityState = {
     UF: Array[] | null,
     City: Array[] | null,
     Cities?: Array[] | null
-    SetCity: Array[] | null
+    SetCity: Array[] | null,
+    SelectedCity: any,
 }
 
 export type WeatherState = {

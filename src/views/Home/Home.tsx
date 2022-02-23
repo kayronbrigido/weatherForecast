@@ -8,7 +8,7 @@ import * as NavigationService from '@services/NavigationService';
 import { useDispatch } from 'react-redux';
 import { getWeather, getWeatherArr } from '@src/store/redux-store/actions/weather';
 import useReduxState from '@src/hooks/useReduxState';
-import { getCities } from '@src/store/redux-store/actions/city';
+import { getCities, selectedCity } from '@src/store/redux-store/actions/city';
 import { setHeaderTitle } from '@src/store/redux-store/actions/application';
 
 const Home: React.FC = () => {
@@ -41,6 +41,7 @@ const Home: React.FC = () => {
     }, [weatherArr])
 
     const handleSubmit = (city: string, UF: string) => {
+        dispatch(selectedCity(city))
         dispatch(setHeaderTitle(city))
         dispatch(getWeather(city, UF))
        navigation.navigate("City")
@@ -52,7 +53,7 @@ const Home: React.FC = () => {
             {hasCity ?
                 <ScrollView>
                     {city?.Cities?.map((i, index) => {
-
+                        if(weatherArr[index]){
                         return (
 
                             <CityCard key={index}
@@ -65,7 +66,7 @@ const Home: React.FC = () => {
                                 onPress={() => { handleSubmit(i.city, i.UF) }}
                                 showIcon={true}
                             />
-                        )
+                        )}
                     })
                     }
                 </ScrollView>

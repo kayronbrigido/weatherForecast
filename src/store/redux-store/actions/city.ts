@@ -1,6 +1,6 @@
 import CityApi from "@src/repositories/city"
 
-import { GET_CITIES, GET_CITY, GET_STATE, SET_CITY } from "./actionType";
+import { GET_CITIES, GET_CITY, GET_STATE, SET_CITY, SET_SELECTED_CITY } from "./actionType";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getState = () => async (dispatch: any) => {
@@ -55,6 +55,17 @@ export const getCities = () => async (dispatch: any) => {
             })
         }
     } catch (err) {
+        console.error(err)
+    }
+}
+
+export const selectedCity = (city: any) => (dispatch: any) => {
+    try {
+        dispatch({
+            type: SET_SELECTED_CITY,
+            payload: city
+        })
+    } catch(err) {
         console.error(err)
     }
 }

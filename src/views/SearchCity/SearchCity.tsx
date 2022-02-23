@@ -65,6 +65,15 @@ const SearchCity: React.FC = () => {
         }
 
         arr.push(obj)
+        arr.sort((a, b) => {
+            if ( a.city < b.city ){
+                return -1;
+              }
+              if ( a.city > b.city ){
+                return 1;
+              }
+              return 0;
+        })
         dispatch(setCity(arr))
         navigation.navigate("Home")
     }
